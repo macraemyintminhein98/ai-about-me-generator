@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Profile Crafter</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext x='0' y='14' font-size='16'%3E✨%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f7f9fc; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-width: 700px; width: 100%; text-align: center; }
+        h1 { color: #0056b3; margin-bottom: 25px; font-size: 2em; }
+        textarea { width: calc(100% - 20px); padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em; resize: vertical; min-height: 100px; }
+        button { background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; transition: background-color 0.2s; }
+        button:hover { background-color: #0056b3; }
+        .results-container { text-align: left; margin-top: 30px; padding: 20px; background-color: #e9f0f9; border-radius: 8px; border: 1px solid #d0e0f0; }
+        .result-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #c0d0e0; position: relative; }
+        .result-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .copy-btn { background: none; border: none; color: #007bff; cursor: pointer; font-size: 0.9em; float: right; margin-top: -5px; }
+        .copy-btn:hover { text-decoration: underline; }
+        p { margin: 0; color: #555; }
+        .footer { margin-top: 40px; font-size: 0.9em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ AI Profile Crafter</h1>
+        <p>Generate professional 'About Me' sections for LinkedIn, resumes, and portfolios.</p>
+        <textarea id="keywordsInput" placeholder="Enter keywords: skills, industry, role, achievements (e.g., 'Software Engineer, Python, AWS, Led team, 10% efficiency gain')"></textarea>
+        <button id="generateBtn">Generate Profiles</button>
+        <div id="results" class="results-container" style="display: none;">
+            <h2>Your AI-Generated Profiles:</h2>
+            <div id="output"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 AI Profile Crafter. Powered by AI.</p>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+            const keywords = document.getElementById('keywordsInput').value;
+            if (!keywords.trim()) {
+                alert('Please enter some keywords!');
+                return;
+            }
+            
+            // Simulate AI generation (replace with actual API call)
+            document.getElementById('output').innerHTML = '<p>Generating profiles...</p>';
+            document.getElementById('results').style.display = 'block';
+            
+            const profiles = [
+                `LinkedIn: Highly motivated Software Engineer with expertise in ${keywords.split(',')[0]} and ${keywords.split(',')[1]}. Proven track record in leading teams and achieving significant efficiency gains. Passionate about leveraging technology to solve complex problems and drive innovation.`, 
+                `Resume: Dynamic professional skilled in ${keywords.split(',')[0]} and ${keywords.split(',')[1]}, with a strong focus on ${keywords.split(',')[2]}. Successfully led projects resulting in a 10% efficiency increase. Seeking to contribute to cutting-edge projects.`, 
+                `Portfolio: Creative and results-driven individual proficient in ${keywords.split(',')[0]} and ${keywords.split(',')[1]}. My work focuses on building scalable solutions and delivering impactful results. Explore my projects to see how I bring ideas to life.`
+            ];
+
+            setTimeout(() => {
+                let html = '';
+                profiles.forEach((profile, index) => {
+                    html += `<div class="result-item">
+                                <button class="copy-btn" onclick="copyToClipboard('profile-${index}')">Copy</button>
+                                <p id="profile-${index}">${profile}</p>
+                             </div>`;
+                });
+                document.getElementById('output').innerHTML = html;
+            }, 2000);
+        });
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
